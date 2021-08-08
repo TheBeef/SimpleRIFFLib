@@ -52,8 +52,8 @@ typedef std::stack<uint32_t> t_RIFFSizes;
 
 typedef enum
 {
-    e_RIFFData_Chunk,
-    e_RIFFData_LIST
+    e_RIFFData_DataBlock,
+    e_RIFFData_Group
 } e_RIFFDataType;
 
 typedef enum

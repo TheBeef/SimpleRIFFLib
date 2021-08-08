@@ -375,8 +375,8 @@ void RIFF::CloseRead(void)
  *                   A '\0' is added so you can do a strcmp() on it.
  *    ChunkSize [O] -- The number of bytes in the chunk.
  *    DataType [O] -- The type of block we just read.
- *                      e_RIFFData_Chunk -- A normal chunk type
- *                      e_RIFFData_LIST -- It a sub list.
+ *                      e_RIFFData_DataBlock -- A normal chunk type
+ *                      e_RIFFData_Group -- It a group.
  *
  * FUNCTION:
  *    This function finds and reads the next data block (chunk) in the file
@@ -411,7 +411,7 @@ bool RIFF::ReadNextDataBlock(char *ChunkID,uint32_t *ChunkSize,e_RIFFDataType &D
 {
     ChunkID[4]=0;
 
-    DataType=e_RIFFData_Chunk;
+    DataType=e_RIFFData_DataBlock;
 
     if(FileHandle==NULL)
         throw(e_RIFFError_FileNotOpen);
@@ -445,7 +445,7 @@ bool RIFF::ReadNextDataBlock(char *ChunkID,uint32_t *ChunkSize,e_RIFFDataType &D
 
     if(strcmp(ChunkID,"LIST")==0)
     {
-        DataType=e_RIFFData_Chunk;
+        DataType=e_RIFFData_DataBlock;
 
         if(fread(ChunkID,4,1,FileHandle)!=1)
             throw(e_RIFFError_ReadError);
