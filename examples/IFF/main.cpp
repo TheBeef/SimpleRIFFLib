@@ -142,7 +142,7 @@ void ReadFile(const char *Filename,bool IFFMode)
 
     /* Read the file back in */
     RIFF.Open(Filename,e_RIFFOpen_Read,"TEST");
-    while(RIFF.ReadNextChunk(ChunkID,&ChunkLen))
+    while(RIFF.ReadNextDataBlock(ChunkID,&ChunkLen))
     {
         if(strcmp(ChunkID,"USER")==0)
         {

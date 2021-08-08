@@ -154,7 +154,7 @@ void ReadFile(const char *Filename)
 
     /* Read the file back in */
     RIFF.Open(Filename,e_RIFFOpen_Read,"GRUP");
-    while(RIFF.ReadNextChunk(ChunkID,&ChunkLen))
+    while(RIFF.ReadNextDataBlock(ChunkID,&ChunkLen))
     {
         if(strcmp(ChunkID,"DATA")==0)
         {
@@ -162,7 +162,7 @@ void ReadFile(const char *Filename)
 
             /* Read the sub data */
             RIFF.StartReadingGroup();
-            while(RIFF.ReadNextChunk(ChunkID,&ChunkLen))
+            while(RIFF.ReadNextDataBlock(ChunkID,&ChunkLen))
             {
                 if(strcmp(ChunkID,"SUB1")==0)
                 {

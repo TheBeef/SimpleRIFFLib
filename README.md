@@ -90,3 +90,77 @@ int main(void)
    - This will back up in the file and write the number of bytes in this block to the reserved space for this block.
 6. Finally we close the file
    - This will flush any unwritten data and record the total file size
+
+### Load example
+This is am example of loading your data back in.
+
+This example will read the `MyData` structure from the save example from file named "Example.RIFF".
+
+```C++
+#include "RIFF.h"
+#include <stdio.h>
+
+struct MyData
+{
+    int First;
+    int Second;
+    double Third;
+};
+
+int main(void)
+{
+    class RIFF RIFF;
+    char ChunkID[5];
+    uint32_t ChunkLen;
+    struct MyData Data2Load;
+
+    try
+    {
+        /* Default the data before we try to load */
+        Data2Load.First=0;
+        Data2Load.Second=0;
+        Data2Load.Third=0;
+
+        RIFF.Open("Example.RIFF",e_RIFFOpen_Read,"EXAM");
+        while(RIFF.ReadNextDataBlock(ChunkID,&ChunkLen))
+        {
+            if(strcmp(ChunkID,"DATA")==0)
+            {
+                if(ChunkLen!=sizeof(Data2Load))
+                    throw("Data error");
+                RIFF.Read(&Data2Load,sizeof(Data2Load));
+            }
+        }
+        RIFF.Close();
+    }
+    catch(e_RIFFErrorType err)
+    {
+        printf("Error:%d, %s\n",err,RIFF.Error2Str(err));
+    }
+    catch(const char *Err)
+    {
+        printf("ERR:%s\n",Err);
+    }
+
+    return 0;
+}
+
+```
+1. Again we make an instance of RIFF named `RIFF`
+2. We then open the file for reading with the `RIFF.Open("Example.RIFF",e_RIFFOpen_Read,"EXAM");` line
+   - We pass in "EXAM" again as the file type.  This time the library will check that the file type for the file we are loading matches this
+3. Now we read the next chunk (block) from the file with `while(RIFF.ReadNextDataBlock(ChunkID,&ChunkLen))`
+   - ReadNextDataBlock() return true if it finds a data block, or false if there are no more data blocks to read
+   - It returns the data block ID in the `ChunkID` buffer.  This will use the same rules as the file type.  It will also be converted into a string so you can do strcmp on it.
+   - `ChunkLen` in the number of bytes in this block.  You can read all the bytes or just some of them.  If you don't read all the bytes the next call to ReadNextDataBlock() will skip whatever you didn't read
+4. Next we check if we want to load this data block.  We do a strcmp() on it to see if we recognize it.
+   - If we don't recognize it (or don't want to load it) we just ignore it and ReadNextDataBlock() will skip it on the next call
+   - If we have more than 1 data block type we could load then we use an `else if()` for the next data block ID
+5. If we do want to load the data block then we check that `struct MyData` is big enough to load the block by checking `ChunkLen`
+   - We do this so if someone hacks the file we won't trash memory
+   - This can also be used to only load part of a data structure if a new version that is bigger is found
+6. We now read the data using `RIFF.Read(&Data2Load,sizeof(Data2Load));`
+   - This will just read the data into the `Data2Load` structure.
+   - You should default the `Data2Load` before starting the load incase this block is not found in the file.
+7. We now loop back to try to load the next data block.  If there isn't one we will exit the loop.
+8. Finally we close the file

@@ -108,8 +108,8 @@ class RIFF
 
         /* Read methods */
         void Read(void *Data,uint32_t Bytes);
-        bool ReadNextChunk(char *ChunkID,uint32_t *ChunkSize);
-        bool ReadNextChunk(char *ChunkID,uint32_t *ChunkSize,e_RIFFDataType &DataType);
+        bool ReadNextDataBlock(char *ChunkID,uint32_t *ChunkSize);
+        bool ReadNextDataBlock(char *ChunkID,uint32_t *ChunkSize,e_RIFFDataType &DataType);
         void StartReadingGroup(void);
         void DoneReadingGroup(void);
 

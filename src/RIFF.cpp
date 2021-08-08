@@ -362,11 +362,11 @@ void RIFF::CloseRead(void)
 
 /*******************************************************************************
  * NAME:
- *    RIFF::ReadNextChunk
+ *    RIFF::ReadNextDataBlock
  *
  * SYNOPSIS:
- *    bool RIFF::ReadNextChunk(char *ChunkID,uint32_t *ChunkSize);
- *    bool RIFF::ReadNextChunk(char *ChunkID,uint32_t *ChunkSize,
+ *    bool RIFF::ReadNextDataBlock(char *ChunkID,uint32_t *ChunkSize);
+ *    bool RIFF::ReadNextDataBlock(char *ChunkID,uint32_t *ChunkSize,
  *              e_RIFFDataType &DataType);
  *
  * PARAMETERS:
@@ -379,10 +379,11 @@ void RIFF::CloseRead(void)
  *                      e_RIFFData_LIST -- It a sub list.
  *
  * FUNCTION:
- *    This function finds and reads the next chunk in the file opened for
- *    reading.
+ *    This function finds and reads the next data block (chunk) in the file
+ *    opened for reading.
  *
- *    If you want to skip the returned chunk just call ReadNextChunk again.
+ *    If you want to skip the returned chunk just call ReadNextDataBlock()
+ *    again.
  *
  * RETURNS:
  *    true -- Another chunk was found.  'ChunkID' and 'ChunkSize' have
@@ -393,7 +394,7 @@ void RIFF::CloseRead(void)
  *    char Chunk[5];
  *    uint32_t Size;
  *
- *    while(RIFF.ReadNextChunk(Chunk,&Size))
+ *    while(RIFF.ReadNextDataBlock(Chunk,&Size))
  *    {
  *        if(strcmp(Chunk,"fmt ")==0)
  *            RIFF.Read(&WaveFormatHeader,sizeof(WaveFormatHeader));
@@ -406,7 +407,7 @@ void RIFF::CloseRead(void)
  * SEE ALSO:
  *    FinishReadChunk()
  ******************************************************************************/
-bool RIFF::ReadNextChunk(char *ChunkID,uint32_t *ChunkSize,e_RIFFDataType &DataType)
+bool RIFF::ReadNextDataBlock(char *ChunkID,uint32_t *ChunkSize,e_RIFFDataType &DataType)
 {
     ChunkID[4]=0;
 
@@ -455,11 +456,11 @@ bool RIFF::ReadNextChunk(char *ChunkID,uint32_t *ChunkSize,e_RIFFDataType &DataT
 
     return true;
 }
-bool RIFF::ReadNextChunk(char *ChunkID,uint32_t *ChunkSize)
+bool RIFF::ReadNextDataBlock(char *ChunkID,uint32_t *ChunkSize)
 {
     e_RIFFDataType DataType;
 
-    return ReadNextChunk(ChunkID,ChunkSize,DataType);
+    return ReadNextDataBlock(ChunkID,ChunkSize,DataType);
 }
 
 /*******************************************************************************

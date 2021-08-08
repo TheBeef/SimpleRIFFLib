@@ -72,7 +72,7 @@ int main(void)
 
         /* Read the file back in */
         RIFF.Open("HelloWorld.RIFF",e_RIFFOpen_Read,"HELO");
-        while(RIFF.ReadNextChunk(ChunkID,&ChunkLen))
+        while(RIFF.ReadNextDataBlock(ChunkID,&ChunkLen))
         {
             if(strcmp(ChunkID,"WORL")==0)
             {
