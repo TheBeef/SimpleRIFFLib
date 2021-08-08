@@ -57,6 +57,7 @@ You can use this to tell if the ChunkID that was just read is normal data ID or 
 This will be set to one of the following:
 
 | Value                | Description |
+| -------------------- | ----------- |
 | e_RIFFData_DataBlock | Data block that was made with StartDataBlock() |
 | e_RIFFData_Group     | Group that was made with StartGroup() |
 
