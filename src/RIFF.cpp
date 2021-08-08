@@ -464,25 +464,25 @@ bool RIFF::ReadNextChunk(char *ChunkID,uint32_t *ChunkSize)
 
 /*******************************************************************************
  * NAME:
- *    RIFF::StartReadingSubList
+ *    RIFF::StartReadingGroup
  *
  * SYNOPSIS:
- *    void RIFF::StartReadingSubList(void);
+ *    void RIFF::StartReadingGroup(void);
  *
  * PARAMETERS:
  *    NONE
  *
  * FUNCTION:
  *    This function needs to be called when you are about to start reading
- *    in a sub list.
+ *    in a group.
  *
  * RETURNS:
  *    NONE
  *
  * SEE ALSO:
- *    RIFF::DoneReadingSubList()
+ *    RIFF::DoneReadingGroup()
  ******************************************************************************/
-void RIFF::StartReadingSubList(void)
+void RIFF::StartReadingGroup(void)
 {
     struct ListHistory Old;
 
@@ -499,25 +499,25 @@ void RIFF::StartReadingSubList(void)
 
 /*******************************************************************************
  * NAME:
- *    RIFF::DoneReadingSubList
+ *    RIFF::DoneReadingGroup
  *
  * SYNOPSIS:
- *    void RIFF::DoneReadingSubList(void);
+ *    void RIFF::DoneReadingGroup(void);
  *
  * PARAMETERS:
  *    NONE
  *
  * FUNCTION:
- *    This function is called after you are done reading in a sub list.
- *    Any unread data / chunks will be skipped.
+ *    This function is called after you are done reading in a group.
+ *    It moves up 1 group.  Any unread data / chunks will be skipped.
  *
  * RETURNS:
  *    NONE
  *
  * SEE ALSO:
- *    RIFF::StartReadingSubList()
+ *    RIFF::StartReadingGroup()
  ******************************************************************************/
-void RIFF::DoneReadingSubList(void)
+void RIFF::DoneReadingGroup(void)
 {
     struct ListHistory Old;
     uint32_t BytesInBlockLeft;
