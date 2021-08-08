@@ -19,7 +19,9 @@ tags (when viewed with a hex editor), and store data in a hierarchy.
 This library tries to make it easy to store / read your data without knowning much about the underlying data structure.
 
 # Quick start
-To compile SimpleRIFFLib all you need to do is compile "src/RIFF.cpp" + your code.  There are no external dependencies (beyond standard C++)
+To compile SimpleRIFFLib all you need to do is compile "src/RIFF.cpp" + your code.
+
+There are no external dependencies (beyond standard C++)
 
 ## Helloworld
 This is an example of compiling the HelloWorld example in the examples directory using gcc.
