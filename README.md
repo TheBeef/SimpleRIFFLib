@@ -84,7 +84,7 @@ int main(void)
    - The name must be 4 letters long and made of AscII chars (0-9, a-z, A-Z, _ or space).
    - You can pad a name with spaces.  For example "DOG " would be valid where as "DOG" would not.
 3. We start a data block with `RIFF.StartDataBlock("DATA");`.
-   - This will write the chunk ID (block name) to the file and reserve space for the block size
+   - This will write the chunk ID (block name) to the file and reserve space for the block size.
    - The name of the block follows the same rules as the file type.  4 letters long, AscII only.
 4. Now we write our data.
    - We only do one write here but we can call write many times and they will all be merge into one block.
@@ -154,15 +154,15 @@ int main(void)
 3. Now we read the next chunk (block) from the file with `while(RIFF.ReadNextDataBlock(ChunkID,&ChunkLen))`
    - ReadNextDataBlock() return true if it finds a data block, or false if there are no more data blocks to read
    - It returns the data block ID in the `ChunkID` buffer.  This will use the same rules as the file type.  It will also be converted into a string so you can do strcmp on it.
-   - `ChunkLen` in the number of bytes in this block.  You can read all the bytes or just some of them.  If you don't read all the bytes the next call to ReadNextDataBlock() will skip whatever you didn't read
+   - `ChunkLen` in the number of bytes in this block.  You can read all the bytes or just some of them.  If you don't read all the bytes the next call to ReadNextDataBlock() will skip whatever you didn't read.
 4. Next we check if we want to load this data block.  We do a strcmp() on it to see if we recognize it.
    - If we don't recognize it (or don't want to load it) we just ignore it and ReadNextDataBlock() will skip it on the next call
-   - If we have more than 1 data block type we could load then we use an `else if()` for the next data block ID
-5. If we do want to load the data block then we check that `struct MyData` is big enough to load the block by checking `ChunkLen`
-   - We do this so if someone hacks the file we won't trash memory
-   - This can also be used to only load part of a data structure if a new version that is bigger is found
+   - If we have more than 1 data block, we use `else if()` to check for more data block ID's
+5. If we found our data block then we check that `struct MyData` is big enough to load the block by checking against `ChunkLen`
+   - We do this so if someone hacks the file we won't trash memory (or it's a corrupt file)
+   - This can also be used to only load part of a data structure if a newer version that is bigger is found
 6. We now read the data using `RIFF.Read(&Data2Load,sizeof(Data2Load));`
    - This will just read the data into the `Data2Load` structure.
-   - You should default the `Data2Load` before starting the load incase this block is not found in the file.
-7. We now loop back to try to load the next data block.  If there isn't one we will exit the loop.
+   - You should default the `Data2Load` structure before starting the load, incase this block is not found in the file.
+7. We now loop back to try to load the next data block.  If there isn't any data blocks available we will exit the loop.
 8. Finally we close the file
