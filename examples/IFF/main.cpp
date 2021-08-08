@@ -61,6 +61,7 @@ struct BankData
 /*** FUNCTION PROTOTYPES      ***/
 static void ReadFile(const char *Filename,bool IFFMode);
 static void WriteFile(const char *Filename,bool IFFMode);
+void DoHexDump(const char *Filename);
 
 /*** VARIABLE DEFINITIONS     ***/
 
@@ -78,6 +79,12 @@ int main(void)
 
         printf("*** RIFF Version:\n");
         ReadFile("Data.RIFF",false);
+
+        printf("*** IFF Hex dump:\n");
+        DoHexDump("Data.IFF");
+
+        printf("*** RIFF Hex dump:\n");
+        DoHexDump("Data.RIFF");
     }
     catch(e_RIFFErrorType err)
     {
@@ -167,4 +174,34 @@ void ReadFile(const char *Filename,bool IFFMode)
         }
     }
     RIFF.Close();
+}
+
+void DoHexDump(const char *Filename)
+{
+    FILE *in;
+    uint8_t LineBuff[16];
+    char AscII[17];
+    int bytes;
+    int r;
+
+    in=fopen(Filename,"rb");
+    if(in==NULL)
+    {
+        printf("Failed to open file\n");
+        return;
+    }
+    while((bytes=fread(LineBuff,1,16,in))>0)
+    {
+        for(r=0;r<bytes;r++)
+        {
+            printf("%02X ",LineBuff[r]);
+            if(LineBuff[r]<' ' || LineBuff[r]>=127)
+                AscII[r]='.';
+            else
+                AscII[r]=LineBuff[r];
+        }
+        AscII[bytes]=0;
+        printf("%*s%s\n",(16-bytes)*3,"",AscII);
+    }
+    fclose(in);
 }
