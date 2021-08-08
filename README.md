@@ -30,13 +30,14 @@ g++ -g -I ../../src ../../src/RIFF.cpp main.cpp -o main
 ./main
 ```
 
-### Save code
+### Save example
 This is am example of saving out some basic data that's in a structure.
 
 This example will write the `MyData` structure to a file named "Example.RIFF".
 
 ```C++
 #include "RIFF.h"
+#include <stdio.h>
 
 struct MyData
 {
@@ -72,13 +73,13 @@ int main(void)
 
 ```
 
-1. This first thing we do is make an instance of RIFF named `RIFF`
+1. The first thing we do is make an instance of RIFF named `RIFF`
    - The class takes 1 arg, a bool that lets you set if you want an RIFF or IFF file
    - By default it will make a RIFF file.
-2. Next we open a new file for writing with the `RIFF.Open("Example.RIFF",e_RIFFOpen_Write,"EXAM");` line.
+2. We open a new file for writing with the `RIFF.Open("Example.RIFF",e_RIFFOpen_Write,"EXAM");` line.
    - The first arg is the filename, next we have the mode (write), the last arg is the file type
    - File type is used so we know what type of file this is.  When we load it back it we check for this name.
-   - The name must be 4 letters long and made of AscII chars (0-9, a-z, A-Z, _ and space).
+   - The name must be 4 letters long and made of AscII chars (0-9, a-z, A-Z, _ or space).
    - You can pad a name with spaces.  For example "DOG " would be valid where as "DOG" would not.
 3. We start a data block with `RIFF.StartDataBlock("DATA");`.
    - This will write the chunk ID (block name) to the file and reserve space for the block size
@@ -88,4 +89,4 @@ int main(void)
 5. Next we end the block with `RIFF.EndDataBlock();`
    - This will back up in the file and write the number of bytes in this block to the reserved space for this block.
 6. Finally we close the file
-   - This will flush and unwritten data and record the total file size
+   - This will flush any unwritten data and record the total file size
