@@ -14,3 +14,14 @@ You can use the build.sh script to compile the example or manualy compile with:
 ```
 g++ main.cpp ../../src/RIFF.cpp -I ../../src -o main
 ```
+
+# Usage
+To make a new file:
+```
+./main w example.wav
+```
+
+To read that file back in:
+```
+./main r example.wav
+```
