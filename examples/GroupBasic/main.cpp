@@ -100,7 +100,7 @@ int main(void)
 
 void WriteFile(const char *Filename)
 {
-    class RIFF RIFF(true);
+    class RIFF RIFF;
     struct Data Data;
     struct SubData1 SubData1;
     struct SubData2 SubData2;
@@ -144,7 +144,7 @@ void WriteFile(const char *Filename)
 
 void ReadFile(const char *Filename)
 {
-    class RIFF RIFF(true);
+    class RIFF RIFF;
     char ChunkID[5];
     uint32_t ChunkLen;
     struct Data Data;
