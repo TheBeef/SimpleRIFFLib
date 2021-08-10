@@ -1,4 +1,4 @@
-# GroupBasic
+# Wav
 This is a real world example of using the library.  It loads / creates a .wav file.
 
 .wav files are RIFF files from Microsoft.
