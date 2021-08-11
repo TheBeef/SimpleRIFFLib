@@ -54,7 +54,8 @@ RIFF.Close();
    - Open the "HelloWorld.RIFF" file for reading.  The lib will check if the file type is "HELO" and throw an error if not
 2. `while(RIFF.ReadNextDataBlock(ChunkID,&ChunkLen))`
    - This readys the next data block in the file for loading.
-   - You need to check if you understand the `ChunkID` or not and if so load the data
+   - You need to check if you understand the `ChunkID` or not
+   - If you understand the `ChunkID` load the data
 3. `if(strcmp(ChunkID,"WORL")==0)`
    - This check to see if this chunk ID is for the "WORL" block
    - If it is then we load the data block, other wize we just skip this block (by getting to the end of the while() loop and calling ReadNextDataBlock() again
