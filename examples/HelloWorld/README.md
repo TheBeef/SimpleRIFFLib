@@ -22,10 +22,11 @@ RIFF.EndDataBlock();
 RIFF.Close();
 ```
 1. `RIFF.Open("HelloWorld.RIFF",e_RIFFOpen_Write,"HELO");`
-   - This will open the "HelloWorld.RIFF" file and give it a filetype of "HELO".
+   - This will open the "HelloWorld.RIFF" file and gives it a filetype of "HELO".
 2. `RIFF.StartDataBlock("WORL");`
    - Starts a new block of data named "WORL"
-   - After you open a new block you call Write() to add data to the block.  All Write()'s will be appended to the block until EndDataBlock() is called
+   - After you open a new block you call `Write()` to add data to the block.
+   - All `Write()`'s will be appended to the block until `EndDataBlock()` is called
 3. `RIFF.Write(&WriteHello,sizeof(WriteHello));`
    - Write out the `struct HelloWorld` structure
 4. `RIFF.EndDataBlock();`
@@ -42,12 +43,9 @@ while(RIFF.ReadNextDataBlock(ChunkID,&ChunkLen))
 {
     if(strcmp(ChunkID,"WORL")==0)
     {
-        printf("Reading WORL\n");
         if(ChunkLen!=sizeof(ReadHello))
             throw("Data error");
         RIFF.Read(&ReadHello,sizeof(ReadHello));
-        ReadHello.Data[12]=0;   // Make sure it's a string
-        printf("    \"%s\"\n",ReadHello.Data);
     }
 }
 RIFF.Close();
