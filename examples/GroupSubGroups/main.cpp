@@ -56,7 +56,6 @@ int main(void)
 {
     try
     {
-        /* Write 2 versions of the file */
         WriteFile("AscII.RIFF");
 
         /* Read them back in */
