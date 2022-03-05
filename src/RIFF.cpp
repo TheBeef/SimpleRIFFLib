@@ -797,7 +797,7 @@ void RIFF::Write(const void *Data,uint32_t Bytes)
     if(FileHandle==NULL)
         throw(e_RIFFError_FileNotOpen);
 
-    if(fwrite(Data,Bytes,1,FileHandle)!=1)
+    if(Bytes>0 && fwrite(Data,Bytes,1,FileHandle)!=1)
         throw(e_RIFFError_WriteError);
 
     TotalFileSize+=Bytes;
